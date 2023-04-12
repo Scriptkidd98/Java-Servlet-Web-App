@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -40,6 +41,7 @@ public class FirstServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet FirstServlet at " + request.getContextPath() + "</h1>");
+            //out.println("<p>" + session.getId() +"</p>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -72,7 +74,15 @@ public class FirstServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        System.out.println(request.getParameter("name"));
+        String name = request.getParameter("name");
+        //System.out.println(name);
+        HttpSession session = request.getSession();
+        //PrintWriter out = response.getWriter();
+        session.setAttribute("name", name);
+        System.out.println((String)session.getAttribute("name"));
+        System.out.println(session.getId());
+        System.out.println(session.isNew());
+        
         response.sendRedirect("/FirstServletWebApp");
     }
 
